@@ -1,0 +1,6 @@
+<%= form_tag search_players_path, method: :get, class: "search-form" do %>
+  <%= text_field_tag :q, nil, id: "search-input", placeholder: "Search for a player..." %>
+  <div id="search-results" class="search-results"></div>
+<% end %>
+
+<%= javascript_pack_tag 'player_search' %>

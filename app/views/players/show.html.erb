@@ -1,0 +1,136 @@
+<div class="container mt-5">
+  <div class="row player-card">
+    <div class="col-md-4">
+      <%= image_tag @player.image, alt: @player.name, class: "player-image img-thumbnail" %>
+    </div>
+    <div class="col-md-8">
+      <h1 class="display-4"><%= @player.name %></h1>
+      <p class="h2"><%= @player.position %></p>
+      <hr>
+      <h4 class="info-title">Personal Information</h4>
+      <div class="personal-info">
+        <p><strong>D.O.B:</strong> <%= @player.date_of_birth.strftime("%B %d, %Y") %> (Age: <%= current_age(@player.date_of_birth) %>)</p>
+        <p><strong>Current Team:</strong> <%= @player.team %></p>
+        <p><strong>Current Salary:</strong> <%= number_to_currency(@player.salary, precision: 0, delimiter: ',') %></p>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="feature-placeholder">Feature 1 Placeholder</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <div class="feature-placeholder">Feature 2 Placeholder</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h2 class="mb-3">Contract Details</h2>
+      <% if @contract_info.present? %>
+        <p> <%= @player.name %> signed a <%= @contract_info.con_years %>-Year(s) $<%= number_with_precision(@contract_info.amount / 1_000_000, precision: 1) %> Million contract with the <%= @contract_info.team %> on <%= @contract_info.signed_date.strftime("%B %d, %Y") %>, with an annual average salary of $<%= number_with_precision(@contract_info.amount / @contract_info.con_years / 1_000_000, precision: 1) %> Million.</p>
+      <% else %>
+        No contract information available.
+      <% end %>
+
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Contract</th>
+            <th>Average Salary</th>
+            <th>Team</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @contract_info %>
+            <tr>
+              <td><%= @contract_info.con_years %>-Year(s) $<%= number_with_precision(@contract_info.amount / 1_000_000, precision: 1) %> Million</td>
+              <td><%= number_to_currency(@contract_info.amount / @contract_info.con_years, precision: 0, delimiter: ',') %></td>
+              <td><%= @contract_info.team %></td>
+            </tr>
+          <% else %>
+            <tr>
+              <td colspan="3">No contract information available.</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h2 class="mb-3">Salary Projection</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Season</th>
+            <th>Team</th>
+            <th>Base Salary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @nba_salary_proj.each do |salary| %>
+            <tr>
+              <td><%= salary.season %></td>
+              <td><%= salary.team %></td>
+              <td><%= number_to_currency(salary.base_salary) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <h2 class="mb-3">Career Earnings</h2>
+
+      <% rookie_season = @career_data.first ? @career_data.first.season : 'N/A' %>
+      <% total_years = @career_data.map(&:season).uniq.count %>
+      <% total_salary = @career_data.sum(&:salary_amount) %>
+      <% average_salary = total_years > 0 ? total_salary / total_years : 0 %>
+      
+      <% highest_salary = @career_data.max_by(&:salary_amount)&.salary_amount %>
+      <% lowest_salary = @career_data.min_by(&:salary_amount)&.salary_amount %>
+      <p>
+        <%= @player.name %> has earned a total of
+        <%= total_salary > 0 ? number_to_currency(total_salary, precision: 0, delimiter: ',') : 'N/A' %>
+        so far from his NBA career, with an average annual salary of
+        <%= average_salary > 0 ? number_to_currency(average_salary, precision: 0, delimiter: ',') : 'N/A' %>
+        from his rookie season <%= rookie_season %> to present.
+      </p>
+      <p>Total Career Earnings: <%= number_to_currency(total_salary, precision: 0, delimiter: ',') %> (<%= total_years %> - years)</p>
+      <p>Average Career Earnings: <%= number_to_currency(average_salary, precision: 0, delimiter: ',') %></p>
+      <p>Highest Career Salary: <%= highest_salary ? number_to_currency(highest_salary, precision: 0, delimiter: ',') : 'N/A' %></p>
+      <p>Lowest Career Salary: <%= lowest_salary ? number_to_currency(lowest_salary, precision: 0, delimiter: ',') : 'N/A' %></p>
+
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Season</th>
+            <th>Team</th>
+            <th>Salary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% total_salary = 0 %>
+          <% @career_data.each do |data| %>
+            <tr>
+              <td><%= data.season %></td>
+              <td><%= data.team_name %></td>
+              <td><%= number_to_currency(data.salary_amount, precision: 0, delimiter: ',') %></td>
+            </tr>
+            <% total_salary += data.salary_amount %>
+          <% end %>
+          <tr class="table-primary">
+            <td>Total</td>
+            <td></td>
+            <td><%= number_to_currency(total_salary, precision: 0, delimiter: ',') %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

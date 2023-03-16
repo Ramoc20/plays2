@@ -1,0 +1,126 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ */
+
+/*= require_tree . */
+/*= require_self */
+
+@import "bootstrap";
+.player-image {
+   max-width: 100%;
+   height: auto;
+ }
+ .search-results {
+   position: absolute;
+   z-index: 1000;
+   width: 100%;
+   background-color: white;
+   border: 1px solid #ccc;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   display: none;
+ }
+ 
+ 
+ .search-result {
+   display: flex;
+   align-items: center;
+   padding: 10px;
+   text-decoration: none;
+   color: black;
+ }
+ 
+ .search-result-image {
+   max-height: 50px;
+   margin-right: 10px;
+ }
+ 
+ .search-result:hover {
+   background-color: #f8f8f8;
+ }
+
+ footer {
+  background-color: #1d1d1b;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 3rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+}
+
+.footer-bottom {
+  background-color: #111;
+  padding: 1rem 3rem;
+}
+
+.footer-text {
+  margin: 0;
+}
+
+
+.player-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.player-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.personal-info {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.personal-info strong {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.feature-placeholder {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  color: #6c757d;
+}
+
+.info-title {
+  color: #007bff;
+}
+

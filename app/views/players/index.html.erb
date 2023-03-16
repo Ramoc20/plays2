@@ -1,0 +1,25 @@
+<% if @players.empty? %>
+  <p>No players found.</p>
+<% else %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Age</th>
+        <th>Team</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @players.each do |player| %>
+        <tr>
+          <td><%= link_to player.name, nba_player_path(player) %>
+          </td>
+          <td><%= player.position %></td>
+          <td><%= player.age %></td>
+          <td><%= player.team.name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
