@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+destination: /var/www/sportsm/
+permissions:
+  - object: /var/www/sportsm/
+pattern: “**”
+owner: ubuntu
+group: ubuntu
+mode: 775
+hooks:
+AfterInstall:
+  - location: scripts/dependencies_install.sh
+runas: ubuntu
