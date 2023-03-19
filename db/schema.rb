@@ -14,13 +14,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_125853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "career_data", id: :serial, force: :cascade do |t|
-    t.integer "player_id"
-    t.string "season", limit: 7
-    t.string "team_name", limit: 255
-    t.decimal "salary_amount"
-  end
-
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -47,15 +40,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_125853) do
     t.string "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image"
-  end
-
-  create_table "nba_contract_info", id: :serial, force: :cascade do |t|
-    t.integer "player_id"
-    t.string "player_name"
-    t.integer "con_years"
-    t.decimal "amount", precision: 15, scale: 2
-    t.string "team", limit: 255
   end
 
   create_table "nba_contract_infos", force: :cascade do |t|
@@ -69,20 +53,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_125853) do
     t.index ["player_id"], name: "index_nba_contract_infos_on_player_id"
   end
 
-  create_table "nba_salaries", id: false, force: :cascade do |t|
-    t.bigint "player_id"
-    t.bigint "id"
-    t.decimal "amount"
-    t.string "season"
-  end
-
-  create_table "nba_teams_car", id: false, force: :cascade do |t|
-    t.bigint "id"
-    t.bigint "player_id"
-    t.string "season"
-    t.string "team_name"
-  end
-
   create_table "players", force: :cascade do |t|
     t.string "name"
     t.string "position"
@@ -94,7 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_15_125853) do
     t.string "slug"
     t.bigint "team_id", null: false
     t.string "image"
-    t.date "date_of_birth"
     t.index ["slug"], name: "index_players_on_slug", unique: true
     t.index ["team_id"], name: "index_players_on_team_id"
   end
